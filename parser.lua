@@ -64,6 +64,13 @@ function parseFile(f)
 		    --print("display working")
 	     elseif (ln[1] == "circle") then
 	     	    args = lines[i+1]:split(" ")
+		    circle(tonumber(args[1]), tonumber(args[2]), tonumber(args[3]), tonumber(args[4]))
+		    	    
+	     elseif (ln[1] == "bezier") then
+	     	    args = lines[i+1]:split(" ")
+		    	    
+	     elseif (ln[1] == "hermite") then
+	     	    args = lines[i+1]:split(" ")
 		    	    
 	     end
  	 end

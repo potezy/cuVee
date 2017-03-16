@@ -78,10 +78,10 @@ function translate(x,y,z)
 	 temp[3][4] = z
 	 return temp
 end
-
+sin , cos , pi= math.sin , math.cos, math.pi
 function rotate(axis,theta)
 	 temp = makeMatrix(4,4)
-	 local sin , cos = math.sin , math.cos
+	 
 	 identify(temp)
 	 if (axis == "x") then
 	    temp[2][2] = cos(theta)
@@ -109,6 +109,29 @@ function scale(x,y,z)
 	 temp[2][2] = y
 	 temp[3][3] = z
 	 return temp
+end
+
+function circle(cx , cy , cz , r)
+	 local step = .01
+	 local xcor, ycor, xcor0, ycor0
+	 xcor = r + cx
+	 ycor = cy
+	 for t = 0, 1,  2 *step do
+	     theta = 2 * pi * t
+	     xcor = xcor0
+	     ycor = ycor0
+	     xcor = r * cos(theta) + cx
+	     ycor = r * sin(theta) + cy
+	     addEdge(eMatrix, xcor0 , ycor0 , 0 , xcor , ycor, 0) 
+	 end
+end
+
+function hermite(x0, y0, x1, y1, rx0, ry0, rx1, ry1)
+
+end
+
+function bezier(x0, y0, x1, y1, x2, y2, x3, y3)
+
 end
 
 
