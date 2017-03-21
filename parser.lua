@@ -68,9 +68,11 @@ function parseFile(f)
 		    	    
 	     elseif (ln[1] == "bezier") then
 	     	    args = lines[i+1]:split(" ")
-		    	    
+		    		    	    
 	     elseif (ln[1] == "hermite") then
+	     	    --print(1)
 	     	    args = lines[i+1]:split(" ")
+		    hermite(tonumber(args[1]),tonumber(args[2]),tonumber(args[3]),tonumber(args[4]),tonumber(args[5]),tonumber(args[6]),tonumber(args[7]),tonumber(args[8]))
 		    	    
 	     end
  	 end

@@ -9,14 +9,15 @@ function clear_screen(s)
 	 end
 end
 
-function plot(s , c , x , y)
+function plot(s , c , y , x)
 	 local newy = y
-	 x = math.abs(x - XRES)
+	 local newx = XRES - x -1 
+	 --x = math.abs(x - XRES)
 	 --print(x,y)
 	 if(x >=0 and x<XRES and newy >=0 and newy<YRES) then
-	      s[x][newy].red = c.red
-	      s[x][newy].green = c.green
-	      s[x][newy].blue = c.blue
+	      s[newx][newy].red = c.red
+	      s[newx][newy].green = c.green
+	      s[newx][newy].blue = c.blue
 	 end
 end
 
