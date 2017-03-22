@@ -9,9 +9,10 @@ function clear_screen(s)
 	 end
 end
 
-function plot(s , c , y , x)
-	 local newy = y
-	 local newx = XRES - x -1 
+function plot(s , c , x , y)
+	 local newy =  x 
+	 local newx = YRES - y -1 
+	 --print(newx,newy)
 	 --x = math.abs(x - XRES)
 	 --print(x,y)
 	 if(x >=0 and x<XRES and newy >=0 and newy<YRES) then

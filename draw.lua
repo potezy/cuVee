@@ -122,3 +122,19 @@ function addEdge(pMatrix, x1,y1,z1,x2,y2,z2)
 	 addPoint(pMatrix,x1,y1,z1)
 	 addPoint(pMatrix,x2,y2,z2)
 end
+sin , cos , pi= math.sin , math.cos, math.pi
+function circle(cx , cy , cz , r)
+         local step = .01
+         local xcor, ycor, xcor0, ycor0
+         xcor0 = r + cx --first point
+         ycor0 = cy     --first point
+         for t = 0, 1+step, step do
+             theta = 2 * pi * t
+             xcor1 = r * cos(theta) + cx
+             ycor1 = r * sin(theta) + cy
+             addEdge(eMatrix, xcor0 , ycor0 , 0 , xcor1 , ycor1, 0)
+             ycor0 = ycor1
+             xcor0 = xcor1
+         end
+
+end

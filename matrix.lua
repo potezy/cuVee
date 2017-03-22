@@ -111,23 +111,9 @@ function scale(x,y,z)
 	 return temp
 end
 
-function circle(cx , cy , cz , r)
-	 local step = .01
-	 local xcor, ycor, xcor0, ycor0
-	 xcor0 = r + cx --first point
-	 ycor0 = cy     --first point
-	 for t = 0, 1+step, step do
-	     theta = 2 * pi * t
-	     xcor1 = r * cos(theta) + cx
-	     ycor1 = r * sin(theta) + cy
-	     addEdge(eMatrix, xcor0 , ycor0 , 0 , xcor1 , ycor1, 0)
-	     ycor0 = ycor1
-	     xcor0 = xcor1
-	 end
-	 
-end
 
-function hermitePoints(xcoef,ycoef,t)
+
+function genCoefs(xcoef,ycoef,t)
 	 local xcor, ycor
 	 xcor = xcoef[1][1] * t^3 + xcoef[2][1] * t^2 +xcoef[3][1] *t + xcoef[4][1]
 	 ycor = ycoef[1][1] * t^3 + ycoef[2][1] * t^2 +ycoef[3][1] *t + ycoef[4][1]
@@ -145,7 +131,7 @@ function hermite(x0, y0, x1, y1, rx0, ry0, rx1, ry1)
 	 ycor0 = cyMatrix[4][1]
 	 step = .01
 	 for t = 0, 1 + step, step do
-	     xcor1,ycor1 = hermitePoints(cxMatrix,cyMatrix,t)
+	     xcor1,ycor1 = genCoefs(cxMatrix,cyMatrix,t)
 	     addEdge(eMatrix,xcor0,ycor0,0,xcor1,ycor1,0)
 	     xcor0 = xcor1
 	     ycor0 = ycor1
@@ -155,26 +141,16 @@ function hermite(x0, y0, x1, y1, rx0, ry0, rx1, ry1)
 	 --print(1)
 end
 
-function bezierPoints(coef, t)
-	 local cord , p0,p1,p2,p3
-	 p0= coef[1][1]
-	 p1= coef[2][1]
-	 p2= coef[3][1]
-	 p3= coef[4][1]
-	 cord = p0 * t^3 + p1*t^2 + p2*t + p3
-	 return cord
-end
-
 function bezier(x0, y0, x1, y1, x2, y2, x3, y3)
 	 local bMatrix,cxMatrix,cyMatrix,xcor0,ycor0,xcor1,ycor1,step
-	 bMatrix = {{-1,3,3,1},{3,-6,3,0},{-3,3,0,0},{1,0,0,0}}
-	 cxMatrix = matrixMult(bMatrix, {{x0},{x1},{x2},{x3}}
-	 cyMatrix = matrixMult(bMatrix, {{y0},{y1},{y2},{y3}}
+	 bMatrix = {{-1,3,-3,1},{3,-6,3,0},{-3,3,0,0},{1,0,0,0}}
+	 cxMatrix = matrixMult(bMatrix, {{x0},{x1},{x2},{x3}})
+	 cyMatrix = matrixMult(bMatrix, {{y0},{y1},{y2},{y3}})
 	 xcor0 = cxMatrix[4][1]
 	 ycor0 = cyMatrix[4][1]
 	 step = .01	 
-	 for t = 0, 1 + step, step do
-	     xcor1, ycor1 = bezierPoints(cxMatrix, t),bezierPoints(cyMatrix,t)
+	 for t = 0, 1 , step do
+	     xcor1, ycor1 = genCoefs(cxMatrix,cyMatrix,t)
 	     addEdge(eMatrix,xcor0,ycor0,0,xcor1,ycor1,0)
 	     xcor0 = xcor1
 	     ycor0 = ycor1
